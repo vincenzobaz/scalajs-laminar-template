@@ -4,7 +4,7 @@
 Template for a Scala.js frontend application using [Laminar](https://laminar.dev/)
 and [ScalablyTyped](https://scalablytyped.org/) to use TypeScript typings.
 
-## Background
+## Background
 
 I had a cool idea for a webapp. I sketched it out,
 thought about the tech stack, the UX.
