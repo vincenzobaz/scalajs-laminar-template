@@ -21,6 +21,18 @@ pages
 I decided to set up a minimalistic template and make it public
 for other people having the same ideas.
 
+## Development mode
+
+ - Inside an sbt shell, run `~frontend/fastLinkJS`.
+ - In another terminal `cd frontend` and then `npm run dev`.
+ - Open the link appearing in the terminal in your browser.
+ - Any change to the Scala code will trigger a refresh of the app in your browser
+
+You can run `scalafmtAll` to format the codebase.
+
+You can add Javascript/Typescript dependencies with
+`npm install --save <lib>` inside the `frontend` directory.
+
 ## Ingredients
 
  - sbt
