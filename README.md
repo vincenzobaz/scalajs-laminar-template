@@ -15,13 +15,13 @@ hours putting together the build** and understanding all of the pieces.
 I did not invent anything, I followed these excellent documentation
 pages
 
- - [Getting Started with Scala.js and Vite]https://www.scala-js.org/doc/tutorial/scalajs-vite.html
+ - [Getting Started with Scala.js and Vite](https://www.scala-js.org/doc/tutorial/scalajs-vite.html)
  - ScalablyTyped [SBT plugin without scalajs-bundler](https://scalablytyped.org/docs/plugin-no-bundler)
 
 I decided to set up a minimalistic template and make it public
 for other people having the same ideas.
 
-## Development mode
+## Development mode
 
  - Inside an sbt shell, run `~frontend/fastLinkJS`.
  - In another terminal `cd frontend` and then `npm run dev`.
