@@ -1,26 +1,50 @@
-name := "Laminar Test"
+import org.typelevel.scalacoptions.ScalacOptions
+import org.scalajs.linker.interface.ModuleSplitStyle
+import scala.sys.process.Process
+
+name := "Laminar Template"
 
 ThisBuild / scalaVersion := "3.3.4"
-version := "0.1-SNAPSHOT"
-
 
 lazy val frontend = project
   .in(file("frontend"))
-  .enablePlugins(ScalaJSPlugin, ScalaJSBundlerPlugin)
+  .enablePlugins(
+    // Enable Scala JS
+    ScalaJSPlugin,
+    // Enable compilation of Typscript typings to Scala
+    ScalablyTypedConverterExternalNpmPlugin
+  )
   .settings(
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "17.1.0",
-      "com.raquo" %%% "waypoint" % "8.0.1"
+      "com.raquo" %%% "waypoint" % "8.0.1",
+      "org.scala-js" %%% "scalajs-dom" % "2.8.0",
     ),
-    //(installJsdom / version) := "2.2.0",
-    //(webpack / version) := "5.95.0",
-    //(startWebpackDevServer / version) := "5.0.1",
-    //Compile / fastOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(false) },
-    //Compile / fullOptJS / scalaJSLinkerConfig ~= { _.withSourceMap(true) },
-    mainClass := Some("App"),
+    // Tell Scala.js that this is an application with a main method
     scalaJSUseMainModuleInitializer := true,
-    //(Test / requireJsDomEnv) := true,
-    //useYarn := true
-  )
 
-//Compile / npmDependencies += "@material/mwc-slider" -> Versions.MaterialWebComponents
+    /* Configure Scala.js to emit modules in the optimal way to
+     * connect to Vite's incremental reload.
+     * - emit ECMAScript modules
+     * - emit as many small modules as possible for classes in the "livechart" package
+     * - emit as few (large) modules as possible for all other classes
+     *   (in particular, for the standard library)
+     */
+    scalaJSLinkerConfig ~= {
+      _.withModuleKind(ModuleKind.ESModule)
+        .withModuleSplitStyle(
+          ModuleSplitStyle.SmallModulesFor(List("frontend")))
+    },
+    
+    // Disable this warning or main does not compile
+    Compile / tpolecatExcludeOptions += ScalacOptions.warnValueDiscard,
+    
+    // Tell ScalablyTyped that to use npm
+    externalNpm := {
+      Process("npm", baseDirectory.value).!
+      baseDirectory.value
+    },
+    
+
+    Test / requireJsDomEnv := true
+  )

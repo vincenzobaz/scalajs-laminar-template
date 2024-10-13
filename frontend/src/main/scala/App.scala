@@ -3,7 +3,7 @@ import org.scalajs.dom
 
 object App:
   def main(args: Array[String]): Unit =
-    val containerNode = dom.document.querySelector("#root")
+    val containerNode = dom.document.querySelector("#app")
     render(containerNode, interactive())
 
   def interactive() =
