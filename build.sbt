@@ -18,7 +18,7 @@ lazy val frontend = project
     libraryDependencies ++= Seq(
       "com.raquo" %%% "laminar" % "17.1.0",
       "com.raquo" %%% "waypoint" % "8.0.1",
-      "org.scala-js" %%% "scalajs-dom" % "2.8.0",
+      "org.scala-js" %%% "scalajs-dom" % "2.8.0"
     ),
     // Tell Scala.js that this is an application with a main method
     scalaJSUseMainModuleInitializer := true,
@@ -33,18 +33,17 @@ lazy val frontend = project
     scalaJSLinkerConfig ~= {
       _.withModuleKind(ModuleKind.ESModule)
         .withModuleSplitStyle(
-          ModuleSplitStyle.SmallModulesFor(List("frontend")))
+          ModuleSplitStyle.SmallModulesFor(List("frontend"))
+        )
     },
-    
+
     // Disable this warning or main does not compile
     Compile / tpolecatExcludeOptions += ScalacOptions.warnValueDiscard,
-    
+
     // Tell ScalablyTyped that to use npm
     externalNpm := {
       Process("npm", baseDirectory.value).!
       baseDirectory.value
     },
-    
-
     Test / requireJsDomEnv := true
   )
